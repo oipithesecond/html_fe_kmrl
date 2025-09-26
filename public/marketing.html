@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Department</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/i18next.min.js"></script>
+    <script src="/js/i18nextHttpBackend.min.js"></script>
+</head>
+<body>
+    <div class="language-switcher">
+        <button id="lang-en">English</button>
+        <button id="lang-ml">മലയാളം</button>
+    </div>
+
+    <div class="container">
+        <h1 data-i18n="marketingTitle"></h1>
+
+        <div class="tab-container">
+            <button class="tab-button active" data-tab="add-data" data-i18n="addSla"></button>
+            <button class="tab-button" data-tab="view-data" data-i18n="viewSlas"></button>
+        </div>
+
+        <div id="add-data" class="tab-content active">
+            <div class="form-section">
+                <h2>Add Branding SLA</h2>
+                <form id="branding-sla-form">
+                    <div class="form-group"><label for="sla_id">SLA ID</label><input type="text" id="sla_id" name="sla_id" required></div>
+                    <div class="form-group"><label for="trainset_id_sla">Trainset ID</label><input type="text" id="trainset_id_sla" name="trainset_id" required></div>
+                    <div class="form-group"><label for="target_exposure_hours">Target Exposure (Hours)</label><input type="number" id="target_exposure_hours" name="target_exposure_hours" required></div>
+                    <div class="form-group"><label for="current_exposure_hours">Current Exposure (Hours)</label><input type="number" id="current_exposure_hours" name="current_exposure_hours" required></div>
+                    <div class="form-group"><label for="penalty_per_hour">Penalty per Hour ($)</label><input type="number" id="penalty_per_hour" name="penalty_per_hour" required></div>
+                    <button type="submit">Submit SLA</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="view-data" class="tab-content">
+            <h2>Existing Branding SLAs</h2>
+            <div class="table-container">
+                <table id="sla-table">
+                    <thead><tr><th>SLA ID</th><th>Trainset ID</th><th>Target Hours</th><th>Current Hours</th><th>Penalty/Hour</th><th>Actions</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn">&times;</button>
+            <h2 id="modal-title">Edit Record</h2>
+            <form id="edit-form">
+                <div id="modal-form-content"></div>
+                <div class="modal-actions"><button type="submit" class="modal-save-btn">Save Changes</button></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/i18n.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

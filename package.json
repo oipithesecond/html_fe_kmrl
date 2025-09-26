@@ -1,0 +1,20 @@
+{
+    "name": "kochi-metro-optimizer",
+    "version": "1.0.0",
+    "description": "Kochi Metro Train Induction Planner",
+    "main": "src/server.js",
+    "scripts": {
+        "start": "node src/server.js",
+        "dev": "nodemon server.js"
+    },
+    "dependencies": {
+        "body-parser": "^2.2.0",
+        "csv-parser": "^3.2.0",
+        "express": "^4.18.2",
+        "multer": "^1.4.5-lts.1",
+        "sqlite3": "^5.1.7"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.1"
+    }
+}

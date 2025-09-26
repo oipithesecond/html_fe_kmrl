@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainset Admin</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/i18next.min.js"></script>
+    <script src="/js/i18nextHttpBackend.min.js"></script>
+</head>
+<body>
+    <div class="language-switcher">
+        <button id="lang-en">English</button>
+        <button id="lang-ml">മലയാളം</button>
+    </div>
+
+    <div class="container">
+        <h1 data-i18n="trainsetTitle"></h1>
+
+        <div class="tab-container">
+            <button class="tab-button active" data-tab="add-data" data-i18n="addTrainset"></button>
+            <button class="tab-button" data-tab="view-data" data-i18n="viewTrainsets"></button>
+        </div>
+
+        <div id="add-data" class="tab-content active">
+            <div class="form-section">
+                <h2>Add Trainset Master Data</h2>
+                <form id="trainset-master-form">
+                    <div class="form-group"><label for="trainset_id_master">Trainset ID</label><input type="text" id="trainset_id_master" name="trainset_id" required></div>
+                    <div class="form-group"><label for="cumulative_mileage_km">Cumulative Mileage (km)</label><input type="number" id="cumulative_mileage_km" name="cumulative_mileage_km" required></div>
+                    <div class="form-group"><label for="in_service_date">In-Service Date</label><input type="date" id="in_service_date" name="in_service_date" required></div>
+                    <div class="form-group"><label for="has_branding_wrap">Has Branding Wrap</label><select id="has_branding_wrap" name="has_branding_wrap"><option value="true">True</option><option value="false">False</option></select></div>
+                    <button type="submit">Submit Trainset Data</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="view-data" class="tab-content">
+            <h2>Existing Trainset Master Data</h2>
+            <div class="table-container">
+                <table id="trainset-table">
+                    <thead><tr><th>Trainset ID</th><th>Cumulative Mileage (km)</th><th>In-Service Date</th><th>Has Branding Wrap</th><th>Actions</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn">&times;</button>
+            <h2 id="modal-title">Edit Record</h2>
+            <form id="edit-form">
+                <div id="modal-form-content"></div>
+                <div class="modal-actions"><button type="submit" class="modal-save-btn">Save Changes</button></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/i18n.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

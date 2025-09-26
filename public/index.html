@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kochi Metro - Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/i18next.min.js"></script>
+    <script src="/js/i18nextHttpBackend.min.js"></script>
+</head>
+<body>
+    <div class="language-switcher">
+        <button id="lang-en">English</button>
+        <button id="lang-ml">മലയാളം</button>
+    </div>
+
+    <div class="container">
+        <h1 data-i18n="portalTitle"></h1>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username" data-i18n="usernameLabel"></label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password" data-i18n="passwordLabel"></label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="department" data-i18n="departmentLabel"></label>
+                <select id="department" name="department" required>
+                    <option value="admin" data-i18n="mainAdmin"></option>
+                    <option value="marketing" data-i18n="marketing"></option>
+                    <option value="depot" data-i18n="depotManagement"></option>
+                    <option value="maintenance" data-i18n="maintenance"></option>
+                    <option value="trainset" data-i18n="trainsetAdmin"></option>
+                </select>
+            </div>
+            <button type="submit" id="login-button" data-i18n="login"></button>
+        </form>
+    </div>
+
+    <script>
+        // Login form script remains unchanged
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const department = document.getElementById('department').value;
+            if (department) {
+                window.location.href = `/${department}.html`;
+            }
+        });
+    </script>
+    <script src="/js/i18n.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

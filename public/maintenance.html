@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance Department</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/i18next.min.js"></script>
+    <script src="/js/i18nextHttpBackend.min.js"></script>
+</head>
+<body>
+    <div class="language-switcher">
+        <button id="lang-en">English</button>
+        <button id="lang-ml">മലയാളം</button>
+    </div>
+
+    <div class="container">
+        <h1 data-i18n="maintenanceTitle"></h1>
+
+        <div class="tab-container">
+            <button class="tab-button active" data-tab="add-cert" data-i18n="addCertificate"></button>
+            <button class="tab-button" data-tab="add-job" data-i18n="addJobCard"></button>
+            <button class="tab-button" data-tab="view-data" data-i18n="viewData"></button>
+        </div>
+
+        <div id="add-cert" class="tab-content active">
+            <div class="form-section">
+                <h2>Add Fitness Certificate</h2>
+                <form id="fitness-cert-form">
+                    <div class="form-group"><label for="certificate_id">Certificate ID</label><input type="text" id="certificate_id" name="certificate_id" required></div>
+                    <div class="form-group"><label for="trainset_id_cert">Trainset ID</label><input type="text" id="trainset_id_cert" name="trainset_id" required></div>
+                    <div class="form-group">
+                        <label for="certificate_type">Certificate Type</label>
+                        <select id="certificate_type" name="certificate_type" required>
+                            <option value="Rolling-Stock">Rolling-Stock</option>
+                            <option value="Signalling">Signalling</option>
+                            <option value="Telecom">Telecom</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label for="expiry_date">Expiry Date</label><input type="date" id="expiry_date" name="expiry_date" required></div>
+                    <button type="submit">Submit Certificate</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="add-job" class="tab-content">
+             <div class="form-section">
+                <h2>Add Job Card</h2>
+                <form id="job-card-form">
+                    <div class="form-group"><label for="job_card_id">Job Card ID</label><input type="text" id="job_card_id" name="job_card_id" required></div>
+                    <div class="form-group"><label for="trainset_id_job">Trainset ID</label><input type="text" id="trainset_id_job" name="trainset_id" required></div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" name="status" required>
+                            <option value="CLOSE">CLOSE</option>
+                            <option value="OPEN">OPEN</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label for="is_critical">Is Critical</label><select id="is_critical" name="is_critical"><option value="true">True</option><option value="false">False</option></select></div>
+                    <div class="form-group"><label for="description">Description</label><input type="text" id="description" name="description" required></div>
+                    <div class="form-group"><label for="required_man_hours">Required Man Hours</label><input type="number" id="required_man_hours" name="required_man_hours" required></div>
+                    <button type="submit">Submit Job Card</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="view-data" class="tab-content">
+            <h2>Existing Fitness Certificates</h2>
+            <div class="table-container">
+                <table id="fitness-table">
+                    <thead><tr><th>Certificate ID</th><th>Trainset ID</th><th>Certificate Type</th><th>Expiry Date</th><th>Actions</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <h2 style="margin-top: 2rem;">Existing Job Cards</h2>
+            <div class="table-container">
+                <table id="job-card-table">
+                    <thead><tr><th>Job Card ID</th><th>Trainset ID</th><th>Status</th><th>Critical</th><th>Description</th><th>Man Hours</th><th>Actions</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="edit-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn">&times;</button>
+            <h2 id="modal-title">Edit Record</h2>
+            <form id="edit-form">
+                <div id="modal-form-content"></div>
+                <div class="modal-actions"><button type="submit" class="modal-save-btn">Save Changes</button></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/i18n.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

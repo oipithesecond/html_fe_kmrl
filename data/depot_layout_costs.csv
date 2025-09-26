@@ -1,0 +1,3 @@
+from_location,to_location,shunting_cost
+Arrival_Track_1,IBL_Bay_1,10
+Arrival_Track_1,IBL_Bay_2,15
