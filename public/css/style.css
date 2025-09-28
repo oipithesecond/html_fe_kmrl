@@ -703,7 +703,7 @@ tr:last-child td {
     overflow: hidden;
     text-align: center;
 
-    padding-bottom: 120px;
+    padding-bottom: 140px;
 }
 
 .train-card::before {
@@ -790,11 +790,11 @@ tr:last-child td {
 
 .modal-content {
     background: var(--md-sys-color-surface-container-low);
-    padding: 32px;
+    padding: 24px;
     border-radius: var(--md-sys-shape-corner-extra-large);
     box-shadow: var(--md-sys-elevation-level5);
     width: 90%;
-    max-width: 500px;
+    max-width: 420px;
     position: relative;
     animation: modalSlideIn var(--md-sys-motion-duration-medium4) var(--md-sys-motion-easing-emphasized);
 }
@@ -1053,13 +1053,14 @@ label small,
 
 .modal-save-btn {
     background: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
-    padding: 12px 24px;
-    border-radius: var(--md-sys-shape-corner-large);
+        color: var(--md-sys-color-on-primary);
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: var(--md-sys-shape-corner-large);
 }
 
 #edit-form .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 /* Loading states */
@@ -1291,4 +1292,202 @@ select:focus-visible {
 /* FIX 2: Utility class to hide elements */
 .hidden {
     display: none !important;
+}
+
+/* ADD THIS AT THE END OF YOUR style.css FILE */
+
+/* Portal Page Styles */
+/* Enhanced Portal Page Styles */
+.portal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    max-width: 900px;
+    margin: 48px auto 0;
+    gap: 24px;
+    padding: 0 16px;
+}
+
+.portal-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 20px;
+    background: var(--md-sys-color-surface-container);
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    color: var(--md-sys-color-on-surface);
+    text-decoration: none;
+    text-align: center;
+    border: 1px solid var(--md-sys-color-outline-variant);
+    box-shadow: var(--md-sys-elevation-level2);
+    transition: all var(--md-sys-motion-duration-medium3) var(--md-sys-motion-easing-emphasized);
+    position: relative;
+    overflow: hidden;
+    min-height: 160px;
+}
+
+.portal-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg,
+            var(--md-sys-color-primary),
+            var(--md-sys-color-tertiary),
+            var(--md-sys-color-secondary));
+    transform: translateX(-100%);
+    transition: transform var(--md-sys-motion-duration-medium3) var(--md-sys-motion-easing-emphasized);
+}
+
+.portal-card:hover::before {
+    transform: translateX(0);
+}
+
+.portal-card:hover {
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: var(--md-sys-elevation-level5);
+    background: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    border-color: var(--md-sys-color-primary);
+}
+
+.portal-card .material-icons {
+    font-size: 44px;
+        margin-bottom: 16px;
+        padding: 12px;
+        background: var(--md-sys-color-surface-container-highest);
+        border-radius: 50%;
+        transition: all var(--md-sys-motion-duration-medium2) var(--md-sys-motion-easing-emphasized);
+        color: var(--md-sys-color-primary);
+        box-shadow: var(--md-sys-elevation-level1);
+}
+
+.portal-card:hover .material-icons {
+    transform: scale(1.15) rotate(5deg);
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    box-shadow: var(--md-sys-elevation-level3);
+}
+
+.portal-card span:last-child {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    line-height: 1.4;
+    margin-top: 6px;
+}
+
+/* Individual card color themes */
+.portal-card:nth-child(1):hover {
+    background: var(--md-sys-color-primary-container);
+}
+
+.portal-card:nth-child(2):hover {
+    background: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-on-secondary-container);
+}
+
+.portal-card:nth-child(3):hover {
+    background: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container);
+}
+
+.portal-card:nth-child(4):hover {
+    background: var(--md-sys-color-error-container);
+    color: var(--md-sys-color-on-error-container);
+}
+
+.portal-card:nth-child(5):hover {
+    background: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+}
+
+/* Portal responsive improvements */
+@media (max-width: 768px) {
+    .portal-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-top: 32px;
+        padding: 0 8px;
+    }
+
+    .portal-card {
+        padding: 32px 20px;
+        min-height: 160px;
+    }
+
+    .portal-card .material-icons {
+        font-size: 48px;
+        margin-bottom: 16px;
+        padding: 12px;
+    }
+
+    .portal-card span:last-child {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .portal-card {
+        padding: 28px 16px;
+        min-height: 140px;
+    }
+
+    .portal-card .material-icons {
+        font-size: 40px;
+        padding: 10px;
+    }
+
+    .portal-card span:last-child {
+        font-size: 16px;
+    }
+}
+
+/* Portal entrance animations */
+@keyframes portalCardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.portal-card {
+    animation: portalCardEntrance var(--md-sys-motion-duration-long2) var(--md-sys-motion-easing-emphasized);
+}
+
+.portal-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.portal-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.portal-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.portal-card:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.portal-card:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
+#edit-form input,
+#edit-form select {
+    padding: 12px;
+    font-size: 15px;
+}
+
+#modal-title {
+    margin-bottom: 24px;
 }

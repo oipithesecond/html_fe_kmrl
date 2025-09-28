@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kochi Metro - Department Portal</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <script src="/js/i18next.min.js"></script>
+    <script src="/js/i18nextHttpBackend.min.js"></script>
+</head>
+
+<body>
+
+    <button class="theme-toggle" aria-label="Toggle dark mode">
+        <span class="material-icons">dark_mode</span>
+    </button>
+
+    <div class="language-switcher">
+        <button id="lang-en">English</button>
+        <button id="lang-ml">മലയാളം</button>
+    </div>
+
+    <div class="container">
+        <h1 data-i18n="portalTitle">Select Your Department</h1>
+
+        <div class="portal-grid">
+            <a href="/index.html?department=admin" class="portal-card">
+                <span class="material-icons">admin_panel_settings</span>
+                <span data-i18n="mainAdmin">Main Admin</span>
+            </a>
+            <a href="/index.html?department=marketing" class="portal-card">
+                <span class="material-icons">campaign</span>
+                <span data-i18n="marketing">Marketing</span>
+            </a>
+            <a href="/index.html?department=depot" class="portal-card">
+                <span class="material-icons">warehouse</span>
+                <span data-i18n="depotManagement">Depot Management</span>
+            </a>
+            <a href="/index.html?department=maintenance" class="portal-card">
+                <span class="material-icons">build</span>
+                <span data-i18n="maintenance">Maintenance</span>
+            </a>
+            <a href="/index.html?department=trainset" class="portal-card">
+                <span class="material-icons">train</span>
+                <span data-i18n="trainsetAdmin">Trainset Admin</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="/js/i18n.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>
