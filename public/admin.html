@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Admin</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <script src="/js/i18next.min.js"></script>
     <script src="/js/i18nextHttpBackend.min.js"></script>
 </head>
+
 <body>
+
+    <button class="theme-toggle" aria-label="Toggle dark mode">
+        <span class="material-icons">dark_mode</span>
+    </button>
+
     <div class="language-switcher">
         <button id="lang-en">English</button>
         <button id="lang-ml">മലയാളം</button>
@@ -28,22 +37,28 @@
                 <h2>Run Optimization Model</h2>
                 <form id="run-model-form">
                     <div class="form-group">
-                        <label>Mileage Weight <span class="selected-value" id="mileage-value-display">(Medium: 10)</span></label>
+                        <label>Mileage Weight <span class="selected-value" id="mileage-value-display">(Medium:
+                                10)</span></label>
                         <small>Determines how strictly to balance mileage across trains. High is stricter.</small>
-                        <div class="button-group" data-target-input="w_mileage" data-target-display="mileage-value-display">
+                        <div class="button-group" data-target-input="w_mileage"
+                            data-target-display="mileage-value-display">
                             <button type="button" class="preset-btn" data-value="1" data-name="Low">Low</button>
-                            <button type="button" class="preset-btn active" data-value="10" data-name="Medium">Medium</button>
+                            <button type="button" class="preset-btn active" data-value="10"
+                                data-name="Medium">Medium</button>
                             <button type="button" class="preset-btn" data-value="100" data-name="High">High</button>
                             <button type="button" class="advanced-btn">Advanced</button>
                         </div>
                         <input type="number" class="advanced-input" id="w_mileage" name="w_mileage" value="10">
                     </div>
                     <div class="form-group">
-                        <label>Branding SLA Penalty <span class="selected-value" id="branding-value-display">(Medium: 10000)</span></label>
+                        <label>Branding SLA Penalty <span class="selected-value" id="branding-value-display">(Medium:
+                                10000)</span></label>
                         <small>Determines the priority of trains with branding. High gives more priority.</small>
-                         <div class="button-group" data-target-input="w_branding" data-target-display="branding-value-display">
+                        <div class="button-group" data-target-input="w_branding"
+                            data-target-display="branding-value-display">
                             <button type="button" class="preset-btn" data-value="1000" data-name="Low">Low</button>
-                            <button type="button" class="preset-btn active" data-value="10000" data-name="Medium">Medium</button>
+                            <button type="button" class="preset-btn active" data-value="10000"
+                                data-name="Medium">Medium</button>
                             <button type="button" class="preset-btn" data-value="100000" data-name="High">High</button>
                             <button type="button" class="advanced-btn">Advanced</button>
                         </div>
@@ -52,25 +67,134 @@
                     <button type="submit" id="run-model-btn">Run Model</button>
                 </form>
             </div>
-            <h2>Optimization Results</h2>
-            <div id="results-container">
-                <div class="results-column"><h3>Revenue Service</h3><div id="revenue-service-list" class="results-list"></div></div>
-                <div class="results-column"><h3>Standby</h3><div id="standby-list" class="results-list"></div></div>
-                <div class="results-column"><h3>Maintenance</h3><div id="maintenance-list" class="results-list"></div></div>
+
+            <div id="results-wrapper" class="hidden">
+                <h2>Optimization Results</h2>
+                <div id="results-container">
+                    <div class="results-column">
+                        <h3>Revenue Service</h3>
+                        <div id="revenue-service-list" class="results-list"></div>
+                    </div>
+                    <div class="results-column">
+                        <h3>Standby</h3>
+                        <div id="standby-list" class="results-list"></div>
+                    </div>
+                    <div class="results-column">
+                        <h3>Maintenance</h3>
+                        <div id="maintenance-list" class="results-list"></div>
+                    </div>
+                </div>
             </div>
         </div>
-        
+
         <div id="database-snapshot" class="tab-content">
-             <div class="form-section">
+            <div class="form-section">
                 <h2>Raw Database Snapshot</h2>
                 <button id="fetch-data-btn">Fetch All Database Tables</button>
                 <div id="raw-data-container">
-                    <div class="data-table-section"><h4>Branding SLAs</h4><div class="table-container"><table id="raw-slas-table"><thead><tr><th>SLA ID</th><th>Trainset ID</th><th>Target Hours</th><th>Current Hours</th><th>Penalty/Hour</th><th>Actions</th></tr></thead><tbody></tbody></table></div></div>
-                    <div class="data-table-section"><h4>Depot Layout Costs</h4><div class="table-container"><table id="raw-layout-table"><thead><tr><th>ID</th><th>From</th><th>To</th><th>Cost</th><th>Actions</th></tr></thead><tbody></tbody></table></div></div>
-                    <div class="data-table-section"><h4>Depot Resources</h4><div class="table-container"><table id="raw-resources-table"><thead><tr><th>Resource ID</th><th>Capacity</th><th>Actions</th></tr></thead><tbody></tbody></table></div></div>
-                    <div class="data-table-section"><h4>Fitness Certificates</h4><div class="table-container"><table id="raw-certs-table"><thead><tr><th>Cert. ID</th><th>Trainset ID</th><th>Type</th><th>Expiry</th><th>Actions</th></tr></thead><tbody></tbody></table></div></div>
-                    <div class="data-table-section"><h4>Job Cards</h4><div class="table-container"><table id="raw-jobs-table"><thead><tr><th>Job ID</th><th>Trainset ID</th><th>Status</th><th>Critical</th><th>Description</th><th>Hours</th><th>Actions</th></tr></thead><tbody></tbody></table></div></div>
-                    <div class="data-table-section"><h4>Trainsets</h4><div class="table-container"><table id="raw-trainsets-table"><thead><tr><th>Trainset ID</th><th>Mileage (km)</th><th>In Service</th><th>Branded</th><th>Actions</th></tr></thead><tbody></tbody></table></div></div>
+                    <div class="data-table-section">
+                        <h4>Branding SLAs</h4>
+                        <div class="table-container">
+                            <table id="raw-slas-table">
+                                <thead>
+                                    <tr>
+                                        <th>SLA ID</th>
+                                        <th>Trainset ID</th>
+                                        <th>Target Hours</th>
+                                        <th>Current Hours</th>
+                                        <th>Penalty/Hour</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="data-table-section">
+                        <h4>Depot Layout Costs</h4>
+                        <div class="table-container">
+                            <table id="raw-layout-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>From</th>
+                                        <th>To</th>
+                                        <th>Cost</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="data-table-section">
+                        <h4>Depot Resources</h4>
+                        <div class="table-container">
+                            <table id="raw-resources-table">
+                                <thead>
+                                    <tr>
+                                        <th>Resource ID</th>
+                                        <th>Capacity</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="data-table-section">
+                        <h4>Fitness Certificates</h4>
+                        <div class="table-container">
+                            <table id="raw-certs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Cert. ID</th>
+                                        <th>Trainset ID</th>
+                                        <th>Type</th>
+                                        <th>Expiry</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="data-table-section">
+                        <h4>Job Cards</h4>
+                        <div class="table-container">
+                            <table id="raw-jobs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Job ID</th>
+                                        <th>Trainset ID</th>
+                                        <th>Status</th>
+                                        <th>Critical</th>
+                                        <th>Description</th>
+                                        <th>Hours</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="data-table-section">
+                        <h4>Trainsets</h4>
+                        <div class="table-container">
+                            <table id="raw-trainsets-table">
+                                <thead>
+                                    <tr>
+                                        <th>Trainset ID</th>
+                                        <th>Mileage (km)</th>
+                                        <th>In Service</th>
+                                        <th>Branded</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,7 +204,7 @@
             <div id="train-overview-container"></div>
         </div>
     </div>
-    
+
     <div id="edit-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close-btn">&times;</button>
@@ -95,4 +219,5 @@
     <script src="/js/i18n.js"></script>
     <script src="/js/main.js"></script>
 </body>
+
 </html>
