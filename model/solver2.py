@@ -197,10 +197,11 @@ def assess_train_constraints(data, current_date):
 
 def optimize_train_assignment(data, train_assessments, w_mileage, w_branding):
     """
-    Enhanced multi-objective optimization with better weight application.
+    Enhanced multi-objective optimization using OR-Tools with proper weight application.
     """
     # Constants
     REQUIRED_REVENUE = 16
+    MAX_STANDBY = 20  # Maximum trains that can be on standby
     
     # Separate eligible and ineligible trains
     eligible_trains = [tid for tid, assessment in train_assessments.items() if assessment["is_eligible"]]
@@ -210,6 +211,97 @@ def optimize_train_assignment(data, train_assessments, w_mileage, w_branding):
         return {
             "error": f"Insufficient eligible trains: {len(eligible_trains)} available, {REQUIRED_REVENUE} required"
         }
+    
+    # Create the OR-Tools model
+    model = cp_model.CpModel()
+    
+    # Create decision variables
+    train_vars = {}
+    for train_id in eligible_trains:
+        # 0 = Revenue Service, 1 = Standby, 2 = Maintenance
+        train_vars[train_id] = model.NewIntVar(0, 2, f'train_{train_id}')
+    
+    # CONSTRAINT 1: Exactly REQUIRED_REVENUE trains in revenue service
+    revenue_vars = []
+    for train_id in eligible_trains:
+        is_revenue = model.NewBoolVar(f'is_revenue_{train_id}')
+        model.Add(train_vars[train_id] == 0).OnlyEnforceIf(is_revenue)
+        model.Add(train_vars[train_id] != 0).OnlyEnforceIf(is_revenue.Not())
+        revenue_vars.append(is_revenue)
+    
+    model.Add(sum(revenue_vars) == REQUIRED_REVENUE)
+    
+    # CONSTRAINT 2: Trains with high maintenance demand should go to maintenance
+    for train_id in eligible_trains:
+        assessment = train_assessments[train_id]
+        if assessment["pending_work_hours"] > 15:
+            model.Add(train_vars[train_id] == 2)  # Force to maintenance
+    
+    # OBJECTIVE: Maximize weighted score
+    objective_terms = []
+    
+    for train_id in eligible_trains:
+        assessment = train_assessments[train_id]
+        
+        # Calculate composite score using user weights directly
+        mileage_component = int(assessment["mileage_score"] * w_mileage)
+        branding_component = 0
+        if assessment["has_branding_wrap"]:
+            branding_component = int(assessment["branding_urgency"] * w_branding)
+        
+        composite_score = mileage_component + branding_component
+        
+        # Apply bonus only if assigned to revenue service
+        is_revenue = model.NewBoolVar(f'obj_revenue_{train_id}')
+        model.Add(train_vars[train_id] == 0).OnlyEnforceIf(is_revenue)
+        model.Add(train_vars[train_id] != 0).OnlyEnforceIf(is_revenue.Not())
+        
+        revenue_bonus = model.NewIntVar(0, 100000, f'revenue_bonus_{train_id}')
+        model.Add(revenue_bonus == composite_score).OnlyEnforceIf(is_revenue)
+        model.Add(revenue_bonus == 0).OnlyEnforceIf(is_revenue.Not())
+        
+        objective_terms.append(revenue_bonus)
+    
+    # Set objective
+    model.Maximize(sum(objective_terms))
+    
+    # Solve
+    solver = cp_model.CpSolver()
+    solver.parameters.max_time_in_seconds = 10.0  # Reasonable time limit
+    status = solver.Solve(model)
+    
+    # Process solution
+    if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
+        solution = {}
+        
+        # Assign ineligible trains to maintenance
+        for train_id in ineligible_trains:
+            solution[train_id] = "Maintenance"
+        
+        # Assign eligible trains based on OR-Tools solution
+        for train_id in eligible_trains:
+            assignment_value = solver.Value(train_vars[train_id])
+            if assignment_value == 0:
+                solution[train_id] = "Revenue Service"
+            elif assignment_value == 1:
+                solution[train_id] = "Standby"
+            else:
+                solution[train_id] = "Maintenance"
+        
+        return solution
+    else:
+        # Fallback to original optimization if OR-Tools fails
+        return optimize_train_assignment_fallback(train_assessments, w_mileage, w_branding)
+
+def optimize_train_assignment_fallback(train_assessments, w_mileage, w_branding):
+    """
+    Fallback optimization method if OR-Tools fails.
+    """
+    REQUIRED_REVENUE = 16
+    
+    # Separate eligible and ineligible trains
+    eligible_trains = [tid for tid, assessment in train_assessments.items() if assessment["is_eligible"]]
+    ineligible_trains = [tid for tid, assessment in train_assessments.items() if not assessment["is_eligible"]]
     
     # Enhanced weighted scoring with user preferences
     weighted_scores = []
