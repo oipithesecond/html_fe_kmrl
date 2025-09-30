@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kochi Metro - Login</title>
     <link rel="stylesheet" href="/css/style.css">
-    <!-- ADD these to the <head> section of ALL HTML files -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <script src="/js/i18next.min.js"></script>
     <script src="/js/i18nextHttpBackend.min.js"></script>
 </head>
+
 <body>
 
     <button class="theme-toggle" aria-label="Toggle dark mode">
@@ -48,16 +49,36 @@
     </div>
 
     <script>
-        // Login form script remains unchanged
-        document.getElementById('login-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const department = document.getElementById('department').value;
-            if (department) {
-                window.location.href = `/${department}.html`;
+        document.addEventListener('DOMContentLoaded', function () {
+            const departmentSelect = document.getElementById('department');
+            const loginForm = document.getElementById('login-form');
+
+            // Get department from URL query parameter
+            const params = new URLSearchParams(window.location.search);
+            const departmentFromUrl = params.get('department');
+
+            // If department is found in the URL, pre-select it and disable the dropdown
+            if (departmentFromUrl && departmentSelect) {
+                const optionExists = [...departmentSelect.options].some(opt => opt.value === departmentFromUrl);
+                if (optionExists) {
+                    departmentSelect.value = departmentFromUrl;
+                    departmentSelect.disabled = true; // Prevents user from changing it
+                }
             }
+
+            // Attach submit event listener to the form
+            loginForm.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent default form submission
+                const department = departmentSelect.value;
+                if (department) {
+                    // Redirect to the specific department's page
+                    window.location.href = `/${department}.html`;
+                }
+            });
         });
     </script>
     <script src="/js/i18n.js"></script>
     <script src="/js/main.js"></script>
 </body>
+
 </html>

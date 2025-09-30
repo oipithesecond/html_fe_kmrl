@@ -91,8 +91,17 @@
             <div class="form-section">
                 <h2>Raw Database Snapshot</h2>
                 <button id="fetch-data-btn">Fetch All Database Tables</button>
+        
+                <div id="db-nav-links" class="button-group" style="margin-top: 16px; justify-content: center; display: none;">
+                    <a href="#section-slas" class="preset-btn">SLAs</a>
+                    <a href="#section-layout" class="preset-btn">Layouts</a>
+                    <a href="#section-resources" class="preset-btn">Resources</a>
+                    <a href="#section-certs" class="preset-btn">Certificates</a>
+                    <a href="#section-jobs" class="preset-btn">Job Cards</a>
+                    <a href="#section-trainsets" class="preset-btn">Trainsets</a>
+                </div>
                 <div id="raw-data-container">
-                    <div class="data-table-section">
+                    <div class="data-table-section" id="section-slas">
                         <h4>Branding SLAs</h4>
                         <div class="table-container">
                             <table id="raw-slas-table">
@@ -110,7 +119,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="data-table-section">
+                    <div class="data-table-section" id="section-layout">
                         <h4>Depot Layout Costs</h4>
                         <div class="table-container">
                             <table id="raw-layout-table">
@@ -127,7 +136,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="data-table-section">
+                    <div class="data-table-section" id="section-resources">
                         <h4>Depot Resources</h4>
                         <div class="table-container">
                             <table id="raw-resources-table">
@@ -142,7 +151,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="data-table-section">
+                    <div class="data-table-section" id="section-certs">
                         <h4>Fitness Certificates</h4>
                         <div class="table-container">
                             <table id="raw-certs-table">
@@ -159,7 +168,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="data-table-section">
+                    <div class="data-table-section" id="section-jobs">
                         <h4>Job Cards</h4>
                         <div class="table-container">
                             <table id="raw-jobs-table">
@@ -178,7 +187,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="data-table-section">
+                    <div class="data-table-section" id="section-trainsets">
                         <h4>Trainsets</h4>
                         <div class="table-container">
                             <table id="raw-trainsets-table">

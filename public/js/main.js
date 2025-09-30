@@ -773,6 +773,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 populateTable('raw-certs-table', data.fitnessCertificates, ['certificate_id', 'trainset_id', 'certificate_type', 'expiry_date'], 'certificate_id', 'fitness');
                 populateTable('raw-jobs-table', data.jobCards, ['job_card_id', 'trainset_id', 'status', 'is_critical', 'description', 'required_man_hours'], 'job_card_id', 'jobcard');
                 populateTable('raw-trainsets-table', data.trainsets, ['trainset_id', 'cumulative_mileage_km', 'in_service_date', 'has_branding_wrap'], 'trainset_id', 'trainset');
+
+                document.getElementById('db-nav-links').style.display = 'flex';
+
             } catch (error) {
                 console.error('Fetch error:', error);
                 alert('Could not fetch data.');
